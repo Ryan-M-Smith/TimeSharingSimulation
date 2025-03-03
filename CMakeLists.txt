@@ -6,10 +6,10 @@
 
 cmake_minimum_required(VERSION 3.20)
 project(
-        Simulation
-        DESCRIPTION "A simple simulation of a time-sharing system with a round-robin scheduler. CS-320 Project 1."
-        VERSION 0.1.0
-        LANGUAGES CXX
+	Simulation
+	DESCRIPTION "A simple simulation of a time-sharing system with a round-robin scheduler. CS-320 Project 1."
+	VERSION 0.1.0
+	LANGUAGES CXX
 )
 
 set(CMAKE_REQUIRED_CXX_STANDARD 23)
