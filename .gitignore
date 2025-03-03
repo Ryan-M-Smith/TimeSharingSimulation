@@ -10,3 +10,6 @@ Makefile
 # Executable
 Simulation
 Simulation.exe
+
+# Simulation output files
+logs
