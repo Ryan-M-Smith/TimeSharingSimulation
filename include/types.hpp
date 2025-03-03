@@ -6,4 +6,4 @@
 
 #pragma once
 
-using pid_t = unsigned short;
+using process_id_t = unsigned short;

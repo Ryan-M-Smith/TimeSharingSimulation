@@ -19,15 +19,15 @@ struct Process {
 	 * @param 	burstTime 		The required runtime of the process
 	 * @param 	arrivalTime 	The time the process arrives on the CPU
 	 */
-	Process(pid_t processID, int burstTime, int arrivalTime = 0):
+	Process(process_id_t processID, int burstTime, int arrivalTime = 0):
 		processID(processID),
 		burstTime(burstTime),
 		arrivalTime(arrivalTime)
 	{}
 
-	pid_t 	processID;
-	int 	burstTime;
-	int 	arrivalTime;
-	int 	waitingTime;
-	int 	turnAroundTime;
+	process_id_t 	processID;
+	int 			burstTime;
+	int 			arrivalTime;
+	int 			waitingTime;
+	int 			turnAroundTime;
 };

@@ -4,6 +4,7 @@
 // Created: 3/3/25
 //
 
+#include <stdexcept>
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -12,13 +13,13 @@
 #include "process.hpp"
 #include "types.hpp"
 
-const std::vector<Process*>& readFile(const std::string& filename) {
+const std::vector<Process*> readFile(const std::string& filename) noexcept(false) {
 	std::ifstream file(filename); // Open the file
 	std::vector<Process*> processes; // Create a place to store the processes
 
 	if (file.is_open()) {
         std::string line;
-		pid_t pid = 0;
+		process_id_t pid = 0;
 
 		// Read the burst times from a file
         while (std::getline(file, line)) {
@@ -30,7 +31,7 @@ const std::vector<Process*>& readFile(const std::string& filename) {
     }
 	else {
         std::cerr << "Error opening file" << std::endl;
-        exit(1);
+        throw std::runtime_error("Error opening file");
     }
 
 	return processes;
@@ -38,6 +39,10 @@ const std::vector<Process*>& readFile(const std::string& filename) {
 
 int main() {
 	auto processes = readFile("input.txt");
-	
+
+	for (const auto& process: processes) {
+		std::cout << process->processID << " " << process->burstTime << std::endl;
+	}
+
 	return 0;
 }
