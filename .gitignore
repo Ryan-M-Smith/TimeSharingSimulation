@@ -1,0 +1,12 @@
+# VSCode config
+.vscode
+
+# CMake generated files
+CMakeFiles
+*.cmake
+CMakeCache.txt
+Makefile
+
+# Executable
+Simulation
+Simulation.exe
