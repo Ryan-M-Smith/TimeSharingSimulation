@@ -43,6 +43,11 @@ class CircularLinkedList {
     }
 
     // insertion member functions
+
+    /**
+     * @brief Insert a node at the end of the list
+     * @param data The data to insert
+     */
     void insertAtEnd(T data) {
       Node* newNode = new Node; // Create a new node
       newNode->data = data;
@@ -62,6 +67,10 @@ class CircularLinkedList {
       }
     }
 
+    /**
+     * @brief Insert a node at the front of the list
+     * @param data The data to insert
+     */
     void insertAtFront(T data) {
       Node* newNode = new Node; // Create a new node
       newNode->data = data;
@@ -81,6 +90,11 @@ class CircularLinkedList {
       }
     }
 
+    /**
+     * @brief Insert a node at a specific position in the list
+     * @param data The data to insert
+     * @param position The position to insert the data
+     */
     void insertAtPosition(T data, int position) {
       Node* newNode = new Node; // Create a new node
       newNode->data = data;
@@ -101,6 +115,10 @@ class CircularLinkedList {
     }
 
     // deletion member functions
+
+    /**
+     * @brief Delete the last node in the list
+     */
     void deleteAtEnd() {
       if (head == nullptr) return; // If the list is empty
       if (head->next == head) { // If there is only one node
@@ -119,6 +137,9 @@ class CircularLinkedList {
       }
     }
 
+    /**
+     * @brief Delete the first node in the list
+     */
     void deleteAtFront() {
       if (head == nullptr) return; // If the list is empty
       if (head->next == nullptr) { // If there is only one node
@@ -137,6 +158,10 @@ class CircularLinkedList {
       }
     }
 
+    /**
+     * @brief Delete a node at a specific position in the list
+     * @param position The position to delete the node
+     */
     void deleteAtPosition(int position) {
       if (head == nullptr) return; // If the list is empty
       if (position <= 1) {
@@ -155,6 +180,10 @@ class CircularLinkedList {
       }
     }
 
+    /**
+     * @brief Delete a node with a specific value in the list
+     * @param data The data to delete
+     */
     void deleteByValue(T data) {
       if (head == nullptr) return; // If the list is empty
       if (head->data == data) {
@@ -175,6 +204,10 @@ class CircularLinkedList {
     }
 
     // display and search member functions
+
+    /**
+     * @brief Display the list
+     */
     void display() {
       if (head == nullptr) return;
       Node* current = head; // Start at the head
@@ -186,6 +219,11 @@ class CircularLinkedList {
       std::cout << std::endl;
     }
 
+    /**
+     * @brief Search for a node with a specific value in the list
+     * @param data The data to search
+     * @return true if the data is found, false otherwise
+     */
     bool search(T data) {
       if (head == nullptr) return false;
       Node* current = head; // Start at the head
