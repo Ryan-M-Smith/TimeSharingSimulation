@@ -6,6 +6,7 @@
 
 #include <iostream>
 
+#include "cpu.hpp"
 #include "io.hpp"
 #include "process.hpp"
 
@@ -15,6 +16,9 @@ int main() {
 	for (const auto& process: processes) {
 		std::cout << process->processID << " " << process->burstTime << std::endl;
 	}
+
+	CPU cpu(processes);
+	cpu.roundRobin(5);
 
 	return 0;
 }
