@@ -4,13 +4,7 @@
 // Created: 3/3/25
 //
 
-#include <ctime>
-#include <fstream>
 #include <filesystem>
-#include <format>
-#include <ios>
-#include <stdexcept>
-#include <string>
 
 #include "io.hpp"
 
@@ -18,11 +12,6 @@ using std::string;
 using std::vector;
 
 namespace io {
-	namespace {
-		static const time_t __EPOCH = time(nullptr);
-		static const string __AUDIT_LOG = std::format("logs/audit_log_{}.txt", __EPOCH);
-	}
-
 	/**
 	 * @brief Read the simulator's input file and parse burst times
 	 *
@@ -30,51 +19,65 @@ namespace io {
 	 * @return 				A list of created processes
 	 */
 	const vector<Process*> readFile(const string& filename) noexcept(false) {
-		std::ifstream file(filename); 		// Open the file
+		std::ifstream file(filename); 	// Open the file
 		vector<Process*> processes; 	// Create a place to store the processes
 
-		if (file.is_open()) {
-			string line;
-			process_id_t pid = 0;
-
-			// Read the burst times from a file
-			while (std::getline(file, line)) {
-				// Create a process with each burst time
-				processes.push_back(new Process(++pid, std::stoi(line)));
-				recordEvent(0, std::format("Process {} spawned", pid));
-			}
-
-			file.close();
-		}
-		else {
+		if (!file.is_open()) {
 			throw std::runtime_error("Error opening file");
 		}
+
+		string line;
+		process_id_t pid = 0;
+
+		// Read the burst times from a file
+		while (std::getline(file, line)) {
+			// Create a process with each burst time
+			processes.push_back(new Process(++pid, std::stoi(line)));
+			recordEvent(0, std::format("Process {} spawned", pid));
+		}
+
+		file.close();
 
 		return processes;
 	}
 
 	/**
-	 * @brief Record an event in the audit log
+	 * @brief Create a new audit log
+	 */
+	void createLog() noexcept(false) {
+		// If no log directory exists, create it
+		std::filesystem::create_directory("logs");
+
+		// Open the audit log, or create it if it doesn't exist
+		std::ofstream file(LOG_PATH);
+
+		if (!file.is_open()) {
+			throw std::runtime_error("Error opening file");
+		}
+
+		std::time_t now = std::time(nullptr);
+		char formatted[50];
+		std::strftime(formatted, sizeof(formatted), "%D %T", std::localtime(&now));
+
+		file << "Audit Log - " << formatted << "\n\n";
+
+		file.close();
+	}
+
+	/**
+	 * @brief Record an event to the audit log
 	 *
 	 * @param 	tick 		The tick the event occured at
 	 * @param 	content 	The content to record
 	 */
 	void recordEvent(int tick, const string& content) noexcept(false) {
-		// If no log directory exists, create it
-		std::filesystem::create_directory("logs");
+		std::ofstream file(LOG_PATH, std::ios::app);
 
-		// Open the audit log, or create it if it doesn't exist
-		time_t epoch = time(nullptr);
-		std::ofstream file(__AUDIT_LOG, std::ios::app);
-
-		if (file.is_open()) {
-			// Write to the log
-			file << "[Tick " << tick << "] " << content << "\n";
-		}
-		else {
+		if (!file.is_open()) {
 			throw std::runtime_error("Error opening file");
 		}
 
+		file << "[Tick " << tick << "] " << content << "\n";
 		file.close();
 	}
 }

@@ -37,7 +37,7 @@
 make clean
 ```
 
-### Full clean (removes all build files/diectories)
+### Full clean (removes all build files/diectories and audit logs)
 
 ```sh
 make clean-all

@@ -11,14 +11,27 @@
 #include "process.hpp"
 
 int main() {
-	auto processes = io::readFile("input.txt");
+	io::createLog();
 
+	// Read the processes from the input file
+	std::cout << "Reading processes from file...";
+	auto processes = io::readFile("input.txt");
+	std::cout << "Done\n\n";
+
+	// Display the input data to the user
+	std::cout << "Processes read:\n";
 	for (const auto& process: processes) {
-		std::cout << process->processID << " " << process->burstTime << std::endl;
+		std::cout << "Process ID: " << process->processID
+				  << " | Burst time: " << process->burstTime
+				  << "\n";
 	}
 
-	CPU cpu(processes);
-	cpu.roundRobin(5);
+	std::cout << "\nRunning simulation...\n";
+
+	CPU cpu(processes); // Create the CPU
+	cpu.roundRobin(5);	// Run the simulation
+
+	std::cout << "Simulation complete. Audit log saved to " << io::LOG_PATH << ".\n";
 
 	return 0;
 }

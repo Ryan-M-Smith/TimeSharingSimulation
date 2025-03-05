@@ -32,7 +32,6 @@ class CPU {
 		constexpr static int OVERHEAD_TIME = 2;
 
 		CircularLinkedList<Process*> readyQueue;
-		CircularLinkedList<Process*> finishedQueue = {};
-
-		typename decltype(readyQueue)::node_type currentProcess;
+		CircularLinkedList<Process*> finishedQueue;
+		Node<Process*>* currentProcess;
 };
