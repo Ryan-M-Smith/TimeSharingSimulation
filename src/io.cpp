@@ -25,7 +25,7 @@ namespace io {
 
 	/**
 	 * @brief Read the simulator's input file and parse burst times
-	 * 
+	 *
 	 * @param 	filename 	The input file to read
 	 * @return 				A list of created processes
 	 */
@@ -55,26 +55,26 @@ namespace io {
 
 	/**
 	 * @brief Record an event in the audit log
-	 * 
+	 *
 	 * @param 	tick 		The tick the event occured at
 	 * @param 	content 	The content to record
 	 */
 	void recordEvent(int tick, const string& content) noexcept(false) {
 		// If no log directory exists, create it
 		std::filesystem::create_directory("logs");
-		
+
 		// Open the audit log, or create it if it doesn't exist
 		time_t epoch = time(nullptr);
 		std::ofstream file(__AUDIT_LOG, std::ios::app);
-		
+
 		if (file.is_open()) {
 			// Write to the log
-			file << "[Tick \t" << tick << "] " << content << "\n";
+			file << "[Tick " << tick << "] " << content << "\n";
 		}
 		else {
 			throw std::runtime_error("Error opening file");
 		}
-		
+
 		file.close();
 	}
 }
