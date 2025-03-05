@@ -27,9 +27,9 @@ file(GLOB SOURCES ${PROJ_SRC_DIR}/*.cpp)
 add_executable(${PROJECT_NAME} ${SOURCES})
 target_include_directories(${PROJECT_NAME} PUBLIC ${PROJ_INCLUDE_DIR})
 
-# Add a way to clean all build files
+# Add a way to clean all build and output files
 add_custom_target(clean-all
-	COMMAND rm -rf CMakeCache.txt CMakeFiles *.cmake ${PROJECT_NAME} Makefile
+	COMMAND rm -rf CMakeCache.txt CMakeFiles *.cmake ${PROJECT_NAME} Makefile logs
 )
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
