@@ -14,10 +14,13 @@
 
 #include "io.hpp"
 
+using std::string;
+using std::vector;
+
 namespace io {
 	namespace {
 		static const time_t __EPOCH = time(nullptr);
-		static const std::string __AUDIT_LOG = std::format("logs/audit_log_{}.txt", __EPOCH);
+		static const string __AUDIT_LOG = std::format("logs/audit_log_{}.txt", __EPOCH);
 	}
 
 	/**
@@ -26,12 +29,12 @@ namespace io {
 	 * @param 	filename 	The input file to read
 	 * @return 				A list of created processes
 	 */
-	const std::vector<Process*> readFile(const std::string& filename) noexcept(false) {
+	const vector<Process*> readFile(const string& filename) noexcept(false) {
 		std::ifstream file(filename); 		// Open the file
-		std::vector<Process*> processes; 	// Create a place to store the processes
+		vector<Process*> processes; 	// Create a place to store the processes
 
 		if (file.is_open()) {
-			std::string line;
+			string line;
 			process_id_t pid = 0;
 
 			// Read the burst times from a file
@@ -56,7 +59,7 @@ namespace io {
 	 * @param 	tick 		The tick the event occured at
 	 * @param 	content 	The content to record
 	 */
-	void recordEvent(int tick, const std::string& content) noexcept(false) {
+	void recordEvent(int tick, const string& content) noexcept(false) {
 		// If no log directory exists, create it
 		std::filesystem::create_directory("logs");
 		
