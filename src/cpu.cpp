@@ -28,7 +28,13 @@ void CPU::roundRobin(int quantum) {
 
 			// Move the process to the finished queue
 			finishedQueue.insertAtEnd(process->data);
-			readyQueue.deleteByValue(process->data);
+
+			if (process == next) {
+				readyQueue.deleteAtFront();
+			}
+			else {
+				readyQueue.deleteByValue(process->data);
+			}
 		}
 		else {
 			io::recordEvent(_tick, std::format("Process {} blocking", process->data->processID));
