@@ -10,8 +10,9 @@
 
 void CPU::roundRobin(int quantum) {
 	auto process = currentProcess, next = currentProcess->next;
+	bool done = false;
 
-	while (process != nullptr && process->data != nullptr) {
+	while (!done) {
 		io::recordEvent(_tick, std::format("Process {} running", process->data->processID));
 
 		for (int ticks = quantum; process->data->remainingBurstTime > 0 && ticks > 0; ticks--) {
@@ -30,7 +31,7 @@ void CPU::roundRobin(int quantum) {
 			finishedQueue.insertAtEnd(process->data);
 
 			if (process == next) {
-				readyQueue.deleteAtFront();
+				done = true;
 			}
 			else {
 				readyQueue.deleteByValue(process->data);
@@ -43,8 +44,10 @@ void CPU::roundRobin(int quantum) {
 		io::recordEvent(_tick, "Switching context");
 		_tick += OVERHEAD_TIME; // Simulate process-switching overhead
 
-		process = next;
-		next = process->next;
+		if (!done) {
+			process = next;
+			next = process->next;
+		}
 	}
 
 	io::recordEvent(_tick, "All processes finished. Shutting down.");
