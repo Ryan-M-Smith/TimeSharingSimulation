@@ -1,11 +1,18 @@
-# VSCode config
+# Config
 .vscode
+.vs
 
 # CMake generated files
 CMakeFiles
 *.cmake
 CMakeCache.txt
+CMakeUserPresets.json
 Makefile
+
+# Visual Studio generated files
+out
+*.ilk
+*.pbd
 
 # Executable
 Simulation
