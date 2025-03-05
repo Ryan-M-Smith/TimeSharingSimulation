@@ -19,25 +19,24 @@ namespace io {
 	 * @return 				A list of created processes
 	 */
 	const vector<Process*> readFile(const string& filename) noexcept(false) {
-		std::ifstream file(filename); 		// Open the file
+		std::ifstream file(filename); 	// Open the file
 		vector<Process*> processes; 	// Create a place to store the processes
 
-		if (file.is_open()) {
-			string line;
-			process_id_t pid = 0;
-
-			// Read the burst times from a file
-			while (std::getline(file, line)) {
-				// Create a process with each burst time
-				processes.push_back(new Process(++pid, std::stoi(line)));
-				recordEvent(0, std::format("Process {} spawned", pid));
-			}
-
-			file.close();
-		}
-		else {
+		if (!file.is_open()) {
 			throw std::runtime_error("Error opening file");
 		}
+
+		string line;
+		process_id_t pid = 0;
+
+		// Read the burst times from a file
+		while (std::getline(file, line)) {
+			// Create a process with each burst time
+			processes.push_back(new Process(++pid, std::stoi(line)));
+			recordEvent(0, std::format("Process {} spawned", pid));
+		}
+
+		file.close();
 
 		return processes;
 	}
