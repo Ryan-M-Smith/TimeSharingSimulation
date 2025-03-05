@@ -75,18 +75,9 @@ class CircularLinkedList {
 		}
 
 		~CircularLinkedList() {
-			if (head != nullptr) {
-				node_type current = head; // Start at the head
-				node_type nextNode; // The next node
-				do {
-					nextNode = current->next;
-					delete current; // Delete the current node
-					current = nextNode;
-				} while (current != head); // Stop when you reach the head
-				head = nullptr; // Set head to nullptr after deletion
+			while (head->next != nullptr) {
+				deleteAtFront();
 			}
-
-			delete head; // Delete the last node
 		}
 
 		node_type getHead() const {
@@ -199,7 +190,7 @@ class CircularLinkedList {
 			} else {
 				node_type current = head; // Start at the head
 
-				while (current->next != head) { // Find the last node
+				while (current->next != head && current->next != nullptr) { // Find the last node
 					current = current->next;
 				}
 				node_type currentHead = head;
@@ -260,7 +251,7 @@ class CircularLinkedList {
 		 * @brief Display the list
 		 */
 		void display() {
-			if (head == nullptr) return;
+			if (head == nullptr || head->data == nullptr) return;
 			node_type current = head; // Start at the head
 
 			do {
