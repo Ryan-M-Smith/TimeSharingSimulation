@@ -1,4 +1,4 @@
-// 
+//
 // circular_linked_list.hpp
 // Description: A circular linked list implementation
 // Created: 3/3/2025
@@ -11,7 +11,7 @@
 
 /**
  * @brief A concept defining a generic iterable container
- * 
+ *
  * @tparam C 	The container type
  */
 template<typename C>
@@ -37,29 +37,29 @@ concept __Container = requires(C container) {
 
 /**
  * @brief A linked list node
- * 
+ *
  * @tparam 	T 	The type of data stored in the node
  */
 template<typename T>
 struct Node {
-	T data; 
-	Node* next; 
+	T data;
+	Node* next;
 };
 
 /**
  * @brief A circular linked list implementation
- * 
+ *
  * @tparam T 	The contianer's underlying type
  */
 template <class T>
 class CircularLinkedList {
 	public:
 		using value_type = T;
-		using node_type  = Node<value_type>*; 
+		using node_type  = Node<value_type>*;
 
 	private:
 		node_type head;
-	
+
 	public:
 		CircularLinkedList():
 			head(nullptr)
@@ -154,7 +154,7 @@ class CircularLinkedList {
 				insertAtFront(data);
 			} else {
 				node_type current = head; // Start at the head
-				
+
 				for (int i = 1;
 						 i < position - 1 && current->next != head; // If you've reached the position or the end of the list
 						 i++) { // Find the node before the position
@@ -265,7 +265,7 @@ class CircularLinkedList {
 
 			do {
 				std::cout << current->data << " ";
-				current = current->next; 
+				current = current->next;
 			} while (current != head);
 			std::cout << std::endl;
 		}
