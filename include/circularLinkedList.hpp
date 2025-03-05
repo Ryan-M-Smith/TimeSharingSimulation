@@ -56,10 +56,11 @@ class CircularLinkedList {
 		{}
 
 		template<__Container Container>
-		explicit CircularLinkedList(const Container& container) {
-			head = nullptr;
-			for (auto iter = container.begin(); iter != container.end(); iter++) {
-				insertAtEnd(*iter);
+		explicit CircularLinkedList(const Container& container):
+			CircularLinkedList()
+		{
+			for (const auto& value: container) {
+				insertAtEnd(value);
 			}
 		}
 
