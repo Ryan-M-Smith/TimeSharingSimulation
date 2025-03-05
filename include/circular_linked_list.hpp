@@ -1,5 +1,5 @@
 // 
-// circularLinkedList.hpp
+// circular_linked_list.hpp
 // Description: A circular linked list implementation
 // Created: 3/3/2025
 //
@@ -36,19 +36,29 @@ concept __Container = requires(C container) {
 };
 
 /**
+ * @brief A linked list node
+ * 
+ * @tparam 	T 	The type of data stored in the node
+ */
+template<typename T>
+struct Node {
+	T data; 
+	Node* next; 
+};
+
+/**
  * @brief A circular linked list implementation
  * 
  * @tparam T 	The contianer's underlying type
  */
 template <class T>
 class CircularLinkedList {
-	private:
-		struct Node {
-			T data; 
-			Node* next; 
-		};
+	public:
+		using value_type = T;
+		using node_type  = Node<value_type>*; 
 
-		Node* head;
+	private:
+		node_type head;
 	
 	public:
 		CircularLinkedList():
@@ -66,8 +76,8 @@ class CircularLinkedList {
 
 		~CircularLinkedList() {
 			if (head != nullptr) {
-				Node* current = head; // Start at the head
-				Node* nextNode; // The next node
+				node_type current = head; // Start at the head
+				node_type nextNode; // The next node
 				do {
 					nextNode = current->next;
 					delete current; // Delete the current node
@@ -79,14 +89,18 @@ class CircularLinkedList {
 			delete head; // Delete the last node
 		}
 
+		node_type getHead() const {
+			return head;
+		}
+
 		// insertion member functions
 
 		/**
 		 * @brief Insert a node at the end of the list
 		 * @param data The data to insert
 		 */
-		void insertAtEnd(T data) {
-			Node* newNode = new Node; // Create a new node
+		void insertAtEnd(value_type data) {
+			node_type newNode = new Node<T>; // Create a new node
 			newNode->data = data;
 			newNode->next = head; // The last node points to the head
 
@@ -94,7 +108,7 @@ class CircularLinkedList {
 				head = newNode;
 				head->next = head;
 			} else {
-				Node* current = head; // Start at the head
+				node_type current = head; // Start at the head
 
 				while (current->next != head) { // Find the last node
 					current = current->next;
@@ -108,8 +122,8 @@ class CircularLinkedList {
 		 * @brief Insert a node at the front of the list
 		 * @param data The data to insert
 		 */
-		void insertAtFront(T data) {
-			Node* newNode = new Node; // Create a new node
+		void insertAtFront(value_type data) {
+			node_type newNode = new Node<T>; // Create a new node
 			newNode->data = data;
 			newNode->next = head; // The new node points to the head
 
@@ -117,7 +131,7 @@ class CircularLinkedList {
 				head = newNode;
 				head->next = head;
 			} else {
-				Node* current = head; // Start at the head
+				node_type current = head; // Start at the head
 
 				while (current->next != head) { // Find the last node
 					current = current->next;
@@ -132,14 +146,14 @@ class CircularLinkedList {
 		 * @param data The data to insert
 		 * @param position The position to insert the data
 		 */
-		void insertAtPosition(T data, int position) {
-			Node* newNode = new Node; // Create a new node
+		void insertAtPosition(value_type data, int position) {
+			node_type newNode = new Node<T>; // Create a new node
 			newNode->data = data;
 
 			if (position <= 1 || head == nullptr) {
 				insertAtFront(data);
 			} else {
-				Node* current = head; // Start at the head
+				node_type current = head; // Start at the head
 				
 				for (int i = 1;
 						 i < position - 1 && current->next != head; // If you've reached the position or the end of the list
@@ -162,8 +176,8 @@ class CircularLinkedList {
 				delete head;
 				head = nullptr;
 			} else {
-				Node* current = head; // Start at the head
-				Node* previous = nullptr;
+				node_type current = head; // Start at the head
+				node_type previous = nullptr;
 
 				while (current->next != head) { // Find the last node
 					previous = current;
@@ -183,12 +197,12 @@ class CircularLinkedList {
 				delete head;
 				head = nullptr;
 			} else {
-				Node* current = head; // Start at the head
+				node_type current = head; // Start at the head
 
 				while (current->next != head) { // Find the last node
 					current = current->next;
 				}
-				Node* currentHead = head;
+				node_type currentHead = head;
 				current->next = head->next;
 				head = head->next;
 				delete currentHead; // Delete the head
@@ -204,14 +218,14 @@ class CircularLinkedList {
 			if (position <= 1) {
 				deleteAtFront();
 			} else {
-				Node* current = head;
+				node_type current = head;
 
 				for (int i = 1;
 					i < position - 1 && current->next != head; // If you've reached the position or the end of the list
 					i++) { // Find the node before the position
 					current = current->next;
 				}
-				Node* nodeToDelete = current->next; // The node to delete
+				node_type nodeToDelete = current->next; // The node to delete
 				current->next = nodeToDelete->next; // The current node points to the next node
 				delete nodeToDelete; // Delete the node
 			}
@@ -221,13 +235,13 @@ class CircularLinkedList {
 		 * @brief Delete a node with a specific value in the list
 		 * @param data The data to delete
 		 */
-		void deleteByValue(T data) {
+		void deleteByValue(value_type data) {
 			if (head == nullptr) return; // If the list is empty
 			if (head->data == data) {
 				deleteAtFront();
 			} else {
-				Node* current = head;
-				Node* previous = nullptr;
+				node_type current = head;
+				node_type previous = nullptr;
 
 				while (current->next != head && current->data != data) { // Find the node with the data
 					previous = current;
@@ -247,7 +261,7 @@ class CircularLinkedList {
 		 */
 		void display() {
 			if (head == nullptr) return;
-			Node* current = head; // Start at the head
+			node_type current = head; // Start at the head
 
 			do {
 				std::cout << current->data << " ";
@@ -261,9 +275,9 @@ class CircularLinkedList {
 		 * @param data The data to search
 		 * @return true if the data is found, false otherwise
 		 */
-		bool search(T data) {
+		bool search(value_type data) {
 			if (head == nullptr) return false;
-			Node* current = head; // Start at the head
+			node_type current = head; // Start at the head
 
 			do {
 				if (current->data == data) return true;
