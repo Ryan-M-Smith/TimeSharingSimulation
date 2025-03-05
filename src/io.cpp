@@ -49,7 +49,7 @@ namespace io {
 		std::filesystem::create_directory("logs");
 
 		// Open the audit log, or create it if it doesn't exist
-		std::ofstream file(__AUDIT_LOG);
+		std::ofstream file(LOG_PATH);
 
 		if (!file.is_open()) {
 			throw std::runtime_error("Error opening file");
@@ -71,7 +71,7 @@ namespace io {
 	 * @param 	content 	The content to record
 	 */
 	void recordEvent(int tick, const string& content) noexcept(false) {
-		std::ofstream file(__AUDIT_LOG, std::ios::app);
+		std::ofstream file(LOG_PATH, std::ios::app);
 
 		if (!file.is_open()) {
 			throw std::runtime_error("Error opening file");

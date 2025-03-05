@@ -22,10 +22,8 @@
  * @brief Manage I/O operations for the simulation
  */
 namespace io {
-	namespace {
-		static const std::time_t __EPOCH = time(nullptr);
-		static const std::string __AUDIT_LOG = std::format("logs/audit_log_{}.txt", __EPOCH);
-	}
+	static const std::time_t EPOCH = time(nullptr);
+	static const std::string LOG_PATH = std::format("logs/audit_log_{}.txt", EPOCH);
 
 	const std::vector<Process*> readFile(const std::string& filename) noexcept(false);
 	void createLog() noexcept(false);
@@ -43,7 +41,7 @@ namespace io {
 			return;
 		}
 
-		std::ofstream file(__AUDIT_LOG, std::ios::app);
+		std::ofstream file(LOG_PATH, std::ios::app);
 
 		if (!file.is_open()) {
 			throw std::runtime_error("Error opening file");
