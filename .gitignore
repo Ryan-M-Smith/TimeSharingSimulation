@@ -12,7 +12,7 @@ Makefile
 # Visual Studio generated files
 out
 *.ilk
-*.pbd
+*.pdb
 
 # Executable
 Simulation
