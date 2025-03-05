@@ -11,8 +11,8 @@
 #include "process.hpp"
 
 int main() {
-	auto processes = io::readFile("input.txt");
 	io::createLog();
+	auto processes = io::readFile("input.txt");
 
 	for (const auto& process: processes) {
 		std::cout << process->processID << " " << process->burstTime << std::endl;
