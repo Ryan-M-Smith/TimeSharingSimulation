@@ -28,7 +28,7 @@ concept __Container = requires(C container) {
 
 	// All STL containers are iterable and wrap member functions which return certain
 	// underlying types
-	{ container.get_allocator() } 	-> std::same_as<typename C::allocator_type>;
+	{ container.get_allocator() }	-> std::same_as<typename C::allocator_type>;
 	{ container.begin() } 			-> std::same_as<typename C::iterator>;
 	{ container.end() } 			-> std::same_as<typename C::iterator>;
 	{ container.cbegin() } 			-> std::same_as<typename C::const_iterator>;
