@@ -14,7 +14,7 @@
 struct Process {
 	/**
 	 * @brief Create a new Process object
-	 * 
+	 *
 	 * @param 	processID 		The ID of the process
 	 * @param 	burstTime 		The required runtime of the process
 	 * @param 	arrivalTime 	The time the process arrives on the CPU
@@ -22,11 +22,13 @@ struct Process {
 	Process(process_id_t processID, int burstTime, int arrivalTime = 0):
 		processID(processID),
 		burstTime(burstTime),
+		remainingBurstTime(burstTime),
 		arrivalTime(arrivalTime)
 	{}
 
 	process_id_t 	processID;
 	int 			burstTime;
+	int 			remainingBurstTime;
 	int 			arrivalTime;
 	int 			waitingTime;
 	int 			turnAroundTime;
