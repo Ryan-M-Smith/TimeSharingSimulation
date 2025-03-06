@@ -4,6 +4,22 @@
 
 ## Building
 
+This project is cross-platform and can be built for Windows, macOS, and Linux
+using CMake.
+
+### Visual Studio (Windows)
+
+1. Make sure Visual Studio is up to date and make sure you have the **Desktop Development with C++**
+and **C++ CMake Tools for Windows** modules installed.
+
+2. Find the **Startup Item** dropdown and choose `Simulation.exe`
+
+3. Click the run button (or press **F5**) to build and execute the project.
+
+_**NOTE:** you can also build the project through the_ **CMake Targets View** _in the solution explorer or from the menu by navigating to_ `Build > Build All`_._
+
+### Command Line (macOS/Linux)
+
 1. Clone the repository
 
     ```sh
