@@ -16,20 +16,27 @@ using std::vector;
 
 class CPU {
 	public:
-		explicit CPU(const vector<Process*>& processes):
+		CPU(unsigned int quantum, unsigned int overhead, const vector<Process*>& processes):
+			quantum(quantum),
+			overhead(overhead),
 			readyQueue(processes),
 			currentProcess(readyQueue.getHead())
 		{}
 
-		void roundRobin(int quantum);
+		void roundRobin();
+
+		inline unsigned int getTickCount() const {
+			return tick;
+		}
 	private:
-		void tick() {
+		void doTick() {
 			std::this_thread::sleep_for(std::chrono::seconds(1));
-			_tick++;
+			tick++;
 		}
 
-		unsigned int _tick = 0;
-		constexpr static int OVERHEAD_TIME = 2;
+		unsigned int tick = 0;
+		unsigned int quantum;
+		unsigned int overhead;
 
 		CircularLinkedList<Process*> readyQueue;
 		CircularLinkedList<Process*> finishedQueue;

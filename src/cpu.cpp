@@ -8,23 +8,23 @@
 
 #include "io.hpp"
 
-void CPU::roundRobin(int quantum) {
+void CPU::roundRobin() {
 	auto process = currentProcess, next = currentProcess->next;
 	bool done = false;
 
 	while (!done) {
-		io::recordEvent(_tick, std::format("Process {} running", process->data->processID));
+		io::recordEvent(tick, std::format("Process {} running", process->data->processID));
 
 		for (int ticks = quantum; process->data->remainingBurstTime > 0 && ticks > 0; ticks--) {
-			tick();
+			doTick();
 			process->data->remainingBurstTime--;
 		}
 
 		if (process->data->remainingBurstTime == 0) {
-			io::recordEvent(_tick, std::format("Process {} finished", process->data->processID));
+			io::recordEvent(tick, std::format("Process {} finished", process->data->processID));
 
 			// Update the process statistics
-			process->data->turnAroundTime = _tick - process->data->arrivalTime;
+			process->data->turnAroundTime = tick - process->data->arrivalTime;
 			process->data->waitingTime = process->data->turnAroundTime - process->data->burstTime;
 
 			// Move the process to the finished queue
@@ -38,11 +38,11 @@ void CPU::roundRobin(int quantum) {
 			}
 		}
 		else {
-			io::recordEvent(_tick, std::format("Process {} blocking", process->data->processID));
+			io::recordEvent(tick, std::format("Process {} blocking", process->data->processID));
 		}
 
-		io::recordEvent(_tick, "Switching context");
-		_tick += OVERHEAD_TIME; // Simulate process-switching overhead
+		io::recordEvent(tick, "Switching context");
+		tick += overhead; // Simulate process-switching overhead
 
 		if (!done) {
 			process = next;
@@ -50,6 +50,6 @@ void CPU::roundRobin(int quantum) {
 		}
 	}
 
-	io::recordEvent(_tick, "All processes finished. Shutting down.");
+	io::recordEvent(tick, "All processes finished. Shutting down.");
 	io::logProcesses(finishedQueue);
 }
