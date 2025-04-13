@@ -1,5 +1,5 @@
 //
-// Filename: job.hpp
+// Filename: process.hpp
 // Description: A basic process that can be run on the CPU
 // Created: 3/3/25
 //
@@ -19,15 +19,17 @@ struct Process {
 	 * @param 	burstTime 		The required runtime of the process
 	 * @param 	arrivalTime 	The time the process arrives on the CPU
 	 */
-	Process(process_id_t processID, int burstTime, int arrivalTime = 0):
+	Process(process_id_t processID, int burstTime, int priority, int arrivalTime = 0):
 		processID(processID),
 		burstTime(burstTime),
+		priority(priority),
 		remainingBurstTime(burstTime),
 		arrivalTime(arrivalTime)
 	{}
 
 	process_id_t 	processID;
 	int 			burstTime;
+	int				priority;
 	int 			remainingBurstTime;
 	int 			arrivalTime;
 	int 			waitingTime;

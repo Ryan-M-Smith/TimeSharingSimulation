@@ -25,13 +25,14 @@ int main() {
 	// Display the input data to the user
 	std::cout << "Processes read:\n";
 	for (const auto& process: processes) {
-		std::cout << "Process ID: " << process->processID
-				  << " | Burst time: " << process->burstTime
+		std::cout << "Process ID: " 	<< process->processID
+				  << " | Priority: " 	<< process->priority
+				  << " | Burst time: " 	<< process->burstTime
 				  << "\n";
 	}
 	std::cout << "\nRunning simulation..." << std::flush;
 
-	constexpr static unsigned int QUANTUM = 30;
+	constexpr static unsigned int QUANTUM = 60;
 	constexpr static unsigned int OVERHEAD = 2;
 
 	CPU cpu(QUANTUM, OVERHEAD, processes); // Create the CPU
@@ -42,11 +43,12 @@ int main() {
 	auto end = chrono::high_resolution_clock::now();
 
 	auto duration = end - start;
+
 	auto minutes = duration_cast<chrono::minutes>(duration).count();
     auto seconds = duration_cast<chrono::seconds>(duration % chrono::minutes(1)).count();
 
 	std::cout << "\n\nSimulation complete in " << cpu.getTickCount() << " ticks "
-			  << std::format("({}m {}s).", minutes, seconds)
+			  << std::format(" ({}m {}s).", minutes, seconds)
 			  << "\nAudit log saved to " << io::LOG_PATH << ".\n";
 
 	return 0;

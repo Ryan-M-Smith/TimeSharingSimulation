@@ -5,6 +5,7 @@
 //
 
 #include <filesystem>
+#include <sstream>
 
 #include "io.hpp"
 
@@ -31,8 +32,12 @@ namespace io {
 
 		// Read the burst times from a file
 		while (std::getline(file, line)) {
+			std::istringstream stream(line);
+			string burstTime, priority;
+			stream >> burstTime >> priority;
+
 			// Create a process with each burst time
-			processes.push_back(new Process(++pid, std::stoi(line)));
+			processes.push_back(new Process(++pid, std::stoi(burstTime), std::stoi(priority)));
 			recordEvent(0, std::format("Process {} spawned", pid));
 		}
 
