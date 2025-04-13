@@ -75,10 +75,10 @@ class CircularLinkedList {
 
 				int position = 0;
 
-				do {
+				while (current != head && value->priority > current->data->priority) { // Stop when you reach the head or the end of the list
 					current = current->next; // Move to the next node
 					position++;
-				} while (current != head && value->priority > current->data->priority); // Stop when you reach the head or the end of the list
+				}
 
 				insertAtPosition(value, position); // Insert the new node at the position
 			}
