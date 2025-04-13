@@ -69,22 +69,24 @@ class CircularLinkedList {
 		explicit CircularLinkedList(const Container& container):
 			CircularLinkedList()
 		{
-			// Ordered insertion of the container's elements
-			for (const auto& value: container) {
-				node_type current = head; // Start at the head
+			for (const auto& value : container) {
+				node_type current = head;
+				int position = 1;
 
-				int position = 0;
+				if (current == nullptr) {
+					insertAtEnd(value);
+					continue;
+				}
 
 				do {
-					if (current == nullptr) {
+					if (value->priority <= current->data->priority) {
 						break;
 					}
-
-					current = current->next; // Move to the next node
+					current = current->next;
 					position++;
-				} while (current != head && value->priority > current->data->priority); // Stop when you reach the head or the end of the list
+				} while (current != head);
 
-				//insertAtPosition(value, position); // Insert the new node at the position
+				insertAtPosition(value, position);
 			}
 		}
 
