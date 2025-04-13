@@ -19,8 +19,7 @@ class CPU {
 		CPU(unsigned int quantum, unsigned int overhead, const vector<Process*>& processes):
 			quantum(quantum),
 			overhead(overhead),
-			readyQueue(processes),
-			currentProcess(readyQueue.getHead())
+			blockedQueue(processes)
 		{}
 
 		void roundRobin();
@@ -34,11 +33,22 @@ class CPU {
 			tick++;
 		}
 
+		void unblockProcess() {
+			auto process = blockedQueue.getHead();
+			readyQueue.insertAtEnd(process->data);
+			blockedQueue.deleteAtFront();
+
+			if (blockedQueue.getHead()->data == nullptr) {
+				blockedQueue = {};
+			}
+		}
+
 		unsigned int tick = 0;
 		unsigned int quantum;
 		unsigned int overhead;
 
 		CircularLinkedList<Process*> readyQueue;
+		CircularLinkedList<Process*> blockedQueue;
 		CircularLinkedList<Process*> finishedQueue;
 		Node<Process*>* currentProcess;
 };
