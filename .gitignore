@@ -20,3 +20,5 @@ Simulation.exe
 
 # Simulation output files
 logs
+
+.DS_Store
