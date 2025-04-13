@@ -32,6 +32,9 @@ namespace io {
 
 		// Read the burst times from a file
 		while (std::getline(file, line)) {
+			//
+			// Change for project 2: read in burst time and priority
+			//
 			std::istringstream stream(line);
 			string burstTime, priority;
 			stream >> burstTime >> priority;
