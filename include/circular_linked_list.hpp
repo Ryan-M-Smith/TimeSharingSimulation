@@ -75,12 +75,16 @@ class CircularLinkedList {
 
 				int position = 0;
 
-				while (current != head && value->priority > current->data->priority) { // Stop when you reach the head or the end of the list
+				do {
+					if (current == nullptr) {
+						break;
+					}
+
 					current = current->next; // Move to the next node
 					position++;
-				}
+				} while (current != head && value->priority > current->data->priority); // Stop when you reach the head or the end of the list
 
-				insertAtPosition(value, position); // Insert the new node at the position
+				//insertAtPosition(value, position); // Insert the new node at the position
 			}
 		}
 
@@ -101,6 +105,10 @@ class CircularLinkedList {
 
 		node_type getHead() const {
 			return head;
+		}
+
+		bool isEmpty() const {
+			return head == nullptr;
 		}
 
 		// insertion member functions
