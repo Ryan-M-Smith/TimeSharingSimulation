@@ -79,7 +79,7 @@ class CircularLinkedList {
 				}
 
 				do {
-					if (value->priority <= current->data->priority) {
+					if (value->burstTime <= current->data->burstTime) {
 						break;
 					}
 					current = current->next;
