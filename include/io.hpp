@@ -55,7 +55,7 @@ namespace io {
 				 << "Arrival Time: " 				<< iter->data->arrivalTime 								<< "\n"
 				 << "Burst Time: " 					<< iter->data->burstTime 								<< "\n"
 				 << "Waiting Time: " 				<< iter->data->waitingTime 								<< "\n"
-				 << "Turnaround Time: " 			<< iter->data->turnAroundTime 							<< "\n";
+				 << "Turnaround Time: " 			<< iter->data->turnAroundTime 							<< "\n"
 				 << "Normalized Turnaround Time: " 	<< iter->data->turnAroundTime / iter->data->burstTime 	<< "\n";
 		} while ((iter = iter->next) != HEAD);
 
