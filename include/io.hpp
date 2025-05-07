@@ -51,12 +51,12 @@ namespace io {
 		// Write out statistics for each process
 		auto iter = processes.getHead();
 		do {
-			file << "\nProcess ID: " 				<< iter->data->processID 								<< "\n"
-				 << "Arrival Time: " 				<< iter->data->arrivalTime 								<< "\n"
-				 << "Burst Time: " 					<< iter->data->burstTime 								<< "\n"
-				 << "Waiting Time: " 				<< iter->data->waitingTime 								<< "\n"
-				 << "Turnaround Time: " 			<< iter->data->turnAroundTime 							<< "\n"
-				 << "Normalized Turnaround Time: " 	<< iter->data->turnAroundTime / iter->data->burstTime 	<< "\n";
+			file << "\nProcess ID: " 				<< iter->data->processID 													<< "\n"
+				 << "Arrival Time: " 				<< iter->data->arrivalTime 													<< "\n"
+				 << "Burst Time: " 					<< iter->data->burstTime 													<< "\n"
+				 << "Waiting Time: " 				<< iter->data->waitingTime 													<< "\n"
+				 << "Turnaround Time: " 			<< iter->data->turnAroundTime 												<< "\n"
+				 << "Normalized Turnaround Time: " 	<< static_cast<float>(iter->data->turnAroundTime) / iter->data->burstTime 	<< "\n";
 		} while ((iter = iter->next) != HEAD);
 
 	}
